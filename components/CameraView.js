@@ -3,10 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet, Platform, Dimensions } from '
 import { Ionicons } from '@expo/vector-icons';
 import { WebView } from 'react-native-webview';
 import ControlsBar from './ControlsBar';
-import RecordingControls from './RecordingControls';
-import RecordingsScreen from './RecordingsScreen';
+// import RecordingControls from './RecordingControls';
+// import RecordingsScreen from './RecordingsScreen';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import recordingService from './RecordingService';
+// import recordingService from './RecordingService';
 
 const CameraView = ({ cameraName, videoConfig, handleDisconnect, webViewRef, webViewHTML, frameRate, setFrameRate, handleLogout, camera }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -52,17 +52,17 @@ const CameraView = ({ cameraName, videoConfig, handleDisconnect, webViewRef, web
 
     const updateRecordingStatus = async () => {
       // Check if auto-recording is enabled for this camera
-      const isAutoEnabled = await recordingService.isAutoRecordingEnabled(camera);
-      setIsAutoRecordingEnabled(isAutoEnabled);
+      // const isAutoEnabled = await recordingService.isAutoRecordingEnabled(camera);
+      // setIsAutoRecordingEnabled(isAutoEnabled);
       
       // Get recording stats if recording
-      const isRecording = recordingService.isRecording(camera);
-      if (isRecording) {
-        const stats = recordingService.getRecordingStats(camera);
-        setRecordingStats(stats);
-      } else {
-        setRecordingStats(null);
-      }
+      // const isRecording = recordingService.isRecording(camera);
+      // if (isRecording) {
+      //   const stats = recordingService.getRecordingStats(camera);
+      //   setRecordingStats(stats);
+      // } else {
+      //   setRecordingStats(null);
+      // }
     };
     
     // Initial check
@@ -116,17 +116,17 @@ const CameraView = ({ cameraName, videoConfig, handleDisconnect, webViewRef, web
     setIsAutoRecordingEnabled(!isAutoRecordingEnabled);
   };
 
-  if (showRecordings) {
-    return (
-      <RecordingsScreen 
-        selectedCamera={camera} 
-        navigation={{ 
-          setOptions: (options) => console.log('Navigation options:', options),
-          goBack: () => setShowRecordings(false)
-        }}
-      />
-    );
-  }
+  // if (showRecordings) {
+  //   return (
+  //     <RecordingsScreen 
+  //       selectedCamera={camera} 
+  //       navigation={{ 
+  //         setOptions: (options) => console.log('Navigation options:', options),
+  //         goBack: () => setShowRecordings(false)
+  //       }}
+  //     />
+  //   );
+  // }
 
   return (
     <View style={[
@@ -219,13 +219,13 @@ const CameraView = ({ cameraName, videoConfig, handleDisconnect, webViewRef, web
       </View>
 
       {/* Recording Controls */}
-      {!isFullScreen && camera && (
+      {/* {!isFullScreen && camera && (
         <RecordingControls
           camera={camera}
           isAutoRecordingEnabled={isAutoRecordingEnabled}
           onToggleAutoRecording={handleToggleAutoRecording}
         />
-      )}
+      )} */}
 
       {/* Controls Bar */}
       {!isFullScreen && (

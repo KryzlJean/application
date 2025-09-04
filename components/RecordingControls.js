@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import recordingService from './RecordingService';
+// import recordingService from './RecordingService';
 import { format } from 'date-fns';
 
 const RecordingControls = ({ camera, isAutoRecordingEnabled, onToggleAutoRecording }) => {

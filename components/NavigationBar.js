@@ -1,122 +1,149 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { BlurView } from 'expo-blur';
 
-const NavigationBar = ({ activeTab, onTabChange, isSelectionMode, selectedCameras, onRemoveSelected }) => {
-  const tabs = [
-    { id: 'home', icon: 'home', label: 'Home' },
-    { id: 'add', icon: 'add-circle', label: 'Add Camera' },
-    { id: 'wifi', icon: 'wifi', label: 'WiFi Setup' },
-    { id: 'profile', icon: 'person', label: 'Profile' },
-  ];
-
-  return (
-    <BlurView intensity={90} tint="dark" style={styles.navbarBlur}>
-      <View style={styles.navbar}>
-        {tabs.map((tab) => (
-          <TouchableOpacity
-            key={tab.id}
-            style={[
-              styles.tab,
-              activeTab === tab.id && styles.activeTab,
-            ]}
-            onPress={() => (onTabChange || (() => {}))(tab.id)}
-            activeOpacity={0.7}
-          >
-            <Ionicons
-              name={tab.icon}
-              size={24}
-              color={activeTab === tab.id ? '#007AFF' : '#9aa5b1'}
-            />
-            <Text
-              style={[
-                styles.tabLabel,
-                activeTab === tab.id && styles.activeTabLabel,
-              ]}
-            >
-              {tab.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
+const NavigationBar = ({ 
+  activeTab, 
+  onTabChange, 
+  isSelectionMode, 
+  selectedCameras, 
+  onRemoveSelected 
+}) => {
+  // If in selection mode, show selection controls
+  if (isSelectionMode && selectedCameras.length > 0) {
+    return (
+      <View style={styles.selectionBar}>
+        <Text style={styles.selectionText}>
+          {selectedCameras.length} camera{selectedCameras.length > 1 ? 's' : ''} selected
+        </Text>
+        <TouchableOpacity
+          style={styles.removeButton}
+          onPress={onRemoveSelected}
+        >
+          <Ionicons name="trash-outline" size={24} color="#FF3B30" />
+          <Text style={styles.removeText}>Remove</Text>
+        </TouchableOpacity>
       </View>
-      
-      {/* Selection Mode Actions */}
-              {!!isSelectionMode && selectedCameras && selectedCameras.length > 0 && (
-        <View style={styles.selectionActions}>
-          <TouchableOpacity
-            style={styles.removeButton}
-            onPress={onRemoveSelected || (() => {})}
-          >
-            <Ionicons name="trash" size={20} color="#fff" />
-            <Text style={styles.removeButtonText}>
-              Remove ({selectedCameras.length})
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </BlurView>
+    );
+  }
+
+  // Normal navigation bar
+  return (
+    <View style={styles.navigationBar}>
+      <TouchableOpacity
+        style={[styles.navButton, activeTab === 'home' && styles.activeNavButton]}
+        onPress={() => onTabChange('home')}
+      >
+        <Ionicons 
+          name={activeTab === 'home' ? 'home' : 'home-outline'} 
+          size={24} 
+          color={activeTab === 'home' ? '#007FFF' : '#8E8E93'} 
+        />
+        <Text style={[styles.navText, activeTab === 'home' && styles.activeNavText]}>
+          Home
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.navButton, activeTab === 'add' && styles.activeNavButton]}
+        onPress={() => onTabChange('add')}
+      >
+        <Ionicons 
+          name={activeTab === 'add' ? 'add-circle' : 'add-circle-outline'} 
+          size={24} 
+          color={activeTab === 'add' ? '#007FFF' : '#8E8E93'} 
+        />
+        <Text style={[styles.navText, activeTab === 'add' && styles.activeNavText]}>
+          Add Camera
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.navButton, activeTab === 'wifi' && styles.activeNavButton]}
+        onPress={() => onTabChange('wifi')}
+      >
+        <Ionicons 
+          name={activeTab === 'wifi' ? 'wifi' : 'wifi-outline'} 
+          size={24} 
+          color={activeTab === 'wifi' ? '#007FFF' : '#8E8E93'} 
+        />
+        <Text style={[styles.navText, activeTab === 'wifi' && styles.activeNavText]}>
+          WiFi Setup
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.navButton, activeTab === 'profile' && styles.activeNavButton]}
+        onPress={() => onTabChange('profile')}
+      >
+        <Ionicons 
+          name={activeTab === 'profile' ? 'person' : 'person-outline'} 
+          size={24} 
+          color={activeTab === 'profile' ? '#007FFF' : '#8E8E93'} 
+        />
+        <Text style={[styles.navText, activeTab === 'profile' && styles.activeNavText]}>
+          Profile
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  navbarBlur: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1000,
-  },
-  navbar: {
+  navigationBar: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 34,
+    backgroundColor: '#1C1C1E',
+    paddingVertical: 8,
+    paddingBottom: 16,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+    borderTopColor: '#38383A',
   },
-  tab: {
+  navButton: {
+    flex: 1,
     alignItems: 'center',
     paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 12,
-    minWidth: 60,
   },
-  activeTab: {
-    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+  activeNavButton: {
+    // Active state styling handled by icon and text color changes
   },
-  tabLabel: {
-    color: '#9aa5b1',
+  navText: {
     fontSize: 12,
+    color: '#8E8E93',
     marginTop: 4,
+    textAlign: 'center',
+  },
+  activeNavText: {
+    color: '#007FFF',
     fontWeight: '500',
   },
-  activeTabLabel: {
-    color: '#007AFF',
-    fontWeight: '600',
-  },
-  selectionActions: {
-    position: 'absolute',
-    bottom: 100,
-    left: 20,
-    right: 20,
-    backgroundColor: 'rgba(255, 59, 48, 0.9)',
-    borderRadius: 12,
-    padding: 16,
+  selectionBar: {
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#1C1C1E',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    paddingBottom: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#38383A',
+  },
+  selectionText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '500',
   },
   removeButton: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#2C2C2E',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
   },
-  removeButtonText: {
-    color: '#fff',
+  removeText: {
+    color: '#FF3B30',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
     marginLeft: 8,
   },
 });

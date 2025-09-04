@@ -12,6 +12,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import ConnectionForm from './components/ConnectionForm';
 import CameraView from './components/CameraView';
+
 import WifiSetupModal from './components/WifiSetupModal';
 import ProfileScreen from './components/ProfileScreen';
 import NotificationsScreen from './components/NotificationsScreen';
@@ -330,6 +331,8 @@ const handleAddCamera = async (newCamera) => {
     Alert.alert('Success', 'WiFi configuration saved successfully!');
   };
 
+
+
   // Handle open share device
   const handleOpenShareDevice = () => setShowShareDevice(true);
   const handleCloseShareDevice = () => setShowShareDevice(false);
@@ -386,8 +389,8 @@ const handleAddCamera = async (newCamera) => {
             ) : activeTab === 'wifi' ? (
         <View style={{ flex: 1, backgroundColor: '#000' }}>
           <WifiSetupModal
+            visible={true}
             onClose={() => setActiveTab('home')}
-            onSave={handleWifiSetup}
             currentUser={currentUser}
             serverURL={serverURL}
           />

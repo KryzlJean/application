@@ -19,6 +19,8 @@ class CameraService {
         }
       }
       
+      console.log('🔍 Attempting WebSocket connection to:', formattedIP);
+      
       const ws = new WebSocket(formattedIP);
       
       return new Promise((resolve, reject) => {
@@ -43,15 +45,15 @@ class CameraService {
         };
 
         ws.onerror = (error) => {
-          console.error('Status WebSocket error:', error);
-          reject(error);
+          console.error('❌ Status WebSocket error for', camera.name, ':', error.message || error);
+          reject(new Error(`Camera ${camera.name} unreachable: ${error.message || 'Connection failed'}`));
         };
 
         // Timeout after 3 seconds
         setTimeout(() => {
           if (!statusReceived) {
             ws.close();
-            reject(new Error('Status check timeout'));
+            reject(new Error(`Camera ${camera.name} timeout: No response in 3 seconds`));
           }
         }, 3000);
       });

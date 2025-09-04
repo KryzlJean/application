@@ -10,25 +10,23 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
-
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-native-community/netinfo": "11.4.1",
     "date-fns": "^4.1.0",
     "expo": "~53.0.22",
     "expo-blur": "~14.1.5",
+    "expo-device": "~7.1.4",
     "expo-file-system": "~18.1.11",
     "expo-linear-gradient": "~14.1.5",
+    "expo-network": "~7.1.5",
     "expo-screen-orientation": "~8.1.7",
     "expo-status-bar": "~2.2.3",
-    "react": "18.3.1",
-    "react-native": "0.79.6",
+    "react": "19.0.0",
+    "react-native": "0.79.5",
     "react-native-qrcode-svg": "^6.3.15",
     "react-native-svg": "15.11.2",
     "react-native-use-websocket": "^0.2.6",
-    "react-native-webview": "13.13.5",
-    "@react-native-community/netinfo": "11.4.1",
-    "expo-media-library": "~17.1.7",
-    "expo-av": "~15.1.7",
-    "expo-network": "~7.1.5",
-    "expo-device": "~7.1.4"
+    "react-native-webview": "13.13.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
