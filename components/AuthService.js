@@ -1,4 +1,4 @@
-import * as Network from 'expo-network';
+import NetInfo from '@react-native-community/netinfo';
 
 class AuthService {
   // Handle login from database
@@ -11,7 +11,7 @@ class AuthService {
       }
 
       // Basic connectivity check
-      const netState = await Network.getNetworkStateAsync();
+      const netState = await NetInfo.fetch();
       if (!netState.isConnected) {
         throw new Error('No Internet connection');
       }
